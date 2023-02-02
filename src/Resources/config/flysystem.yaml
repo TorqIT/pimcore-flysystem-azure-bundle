@@ -13,61 +13,61 @@ services:
     #
     document_static_adapter:
         # See TorqAzureBlobStorageAdapter - we needed to modify their source slightly
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'pages'
     assets_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'assets'
     asset_cache_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'asset-cache'
     thumbnail_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'thumbnails'
     version_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'versions'
     recycle_bin_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'recyclebin'
     admin_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'admin'
     email_log_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'email'
     tmp_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
             $prefix: 'tmp'
     application_log_adapter:
-        class: 'App\Flysystem\TorqAzureBlobStorageAdapter'
+        class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
             $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Flysystem;
+namespace TorqIT\FlysystemAzureBundle;
 
 use League\Flysystem\AzureBlobStorage\AzureBlobStorageAdapter;
 use League\Flysystem\Config;
