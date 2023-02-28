@@ -2,6 +2,7 @@
     "name": "torqit/pimcore-flysystem-azure-bundle",
     "type": "pimcore-bundle",
     "require": {
+        "league/flysystem": "^3.9",
         "league/flysystem-azure-blob-storage": "^3.0"
     },
     "autoload": {
