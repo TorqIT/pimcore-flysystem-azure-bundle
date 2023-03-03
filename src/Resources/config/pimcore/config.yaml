@@ -22,19 +22,19 @@ services:
         class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
-            $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+            $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER_ASSETS)%'
             $prefix: 'assets'
     asset_cache_adapter:
         class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
-            $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+            $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER_ASSETS)%'
             $prefix: 'asset-cache'
     thumbnail_adapter:
         class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
         arguments:
             $client: '@azure_client_service' 
-            $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+            $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER_ASSETS)%'
             $prefix: 'thumbnails'
     version_adapter:
         class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
