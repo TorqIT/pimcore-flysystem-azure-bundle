@@ -14,6 +14,7 @@ final class FlysystemAzurePass implements CompilerPassInterface
     public function process(ContainerBuilder $container): void
     {
         $pimcoreAdapterServiceIdsToCustomAdapters = [
+            // Mapping the Pimcore Flysystem Adapter service IDs to our custom adapter classes (see services.yaml)
             'flysystem.adapter.pimcore.document_static.storage' => 'document_static_adapter',
             'flysystem.adapter.pimcore.asset.storage' => 'assets_adapter',
             'flysystem.adapter.pimcore.asset_cache.storage' => 'asset_cache_adapter',
