@@ -1,0 +1,116 @@
+flysystem:
+    storages:
+        # Storage for generated static document pages, e.g. .html files generated out of Pimcore documents
+        # which are then delivered directly by the web-server
+        pimcore.document_static.storage:
+            adapter: 'lazy'
+            options:
+                source: '%env(STORAGE_SOURCE)%'
+        pimcore.document_static.storage.azure:
+            adapter: 'document_static_adapter'
+            visibility: public
+        pimcore.document_static.storage.local:
+            adapter: 'local'
+            visibility: public
+            directory_visibility: public
+            options:
+                directory: '%kernel.project_dir%/public/var/tmp/pages'
+
+        # Storage for asset source files, directory structure is equal to the asset tree structure
+        pimcore.asset.storage:
+            adapter: 'lazy'
+            options:
+                source: '%env(STORAGE_SOURCE)%'
+        pimcore.asset.storage.azure:
+            adapter: 'assets_adapter'
+            visibility: public
+        pimcore.asset.storage.local:
+            adapter: 'local'
+            visibility: public
+            directory_visibility: public
+            options:
+                directory: '%kernel.project_dir%/public/var/assets'
+
+        # Storage for cached asset files, e.g. PDF and image files generated out of Office files or videos
+        # which are then used by the thumbnail engine as source files
+        pimcore.asset_cache.storage:
+            adapter: 'lazy'
+            options:
+                source: '%env(STORAGE_SOURCE)%'
+        pimcore.asset_cache.storage.azure:
+            adapter: 'asset_cache_adapter'
+            visibility: private
+        pimcore.asset_cache.storage.local:
+            adapter: 'local'
+            visibility: private
+            options:
+                directory: '%kernel.project_dir%/public/var/tmp/asset-cache'
+
+        # Storage for image and video thumbnails, directory structure is equal to the source asset tree
+        pimcore.thumbnail.storage:
+            adapter: 'lazy'
+            options:
+                source: '%env(STORAGE_SOURCE)%'
+        pimcore.thumbnail.storage.azure:
+            adapter: 'thumbnail_adapter'
+            visibility: public
+        pimcore.thumbnail.storage.local:
+            adapter: 'local'
+            visibility: public
+            directory_visibility: public
+            options:
+                directory: '%kernel.project_dir%/public/var/tmp/thumbnails'
+
+        # Storage for serialized versioning data of documents/asset/data objects
+        pimcore.version.storage:
+            adapter: 'lazy'
+            options:
+                source: '%env(STORAGE_SOURCE)%'
+        pimcore.version.storage.azure:
+            adapter: 'version_adapter'
+            visibility: private
+        pimcore.version.storage.local:
+            adapter: 'local'
+            visibility: private
+            options:
+                directory: '%kernel.project_dir%/var/versions'
+
+        # Storage for serialized recycle bin data of documents/asset/data objects
+        pimcore.recycle_bin.storage:
+            adapter: 'lazy'
+            options:
+                source: '%env(STORAGE_SOURCE)%'
+        pimcore.recycle_bin.storage.azure:
+            adapter: 'recycle_bin_adapter'
+            visibility: private
+        pimcore.recycle_bin.storage.local:
+            adapter: 'local'
+            visibility: private
+            options:
+                directory: '%kernel.project_dir%/var/recyclebin'
+
+
+        # Storage for email logs
+        pimcore.email_log.storage:
+            adapter: 'lazy'
+            options:
+                source: '%env(STORAGE_SOURCE)%'
+        pimcore.email_log.storage.azure:
+            adapter: 'email_log_adapter'
+            visibility: private
+        pimcore.email_log.storage.local:
+            adapter: 'local'
+            visibility: private
+            options:
+                directory: '%kernel.project_dir%/var/email'
+
+        # Storage for temporary files that work under a batch process, such as export csv
+        # must not be `local` for stateless environment
+        pimcore.temp.storage.azure:
+            adapter: 'tmp_adapter'
+            visibility: private
+        pimcore.temp.storage.local:
+            adapter: 'local'
+            visibility: private
+            options:
+                directory: '%kernel.project_dir%/var/tmp'
