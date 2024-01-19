@@ -5,12 +5,6 @@ services:
         arguments:
             $connectionString: 'DefaultEndpointsProtocol=https;AccountName=%env(string:AZURE_STORAGE_ACCOUNT_NAME)%;AccountKey=%env(string:AZURE_STORAGE_ACCOUNT_KEY)%;EndpointSuffix=core.windows.net'
 
-    # Pimcore X still uses flysystem-bundle v2, which didn't yet include the AzureBlobStorageAdapter in its
-    # factory method. As a result, we need to manually instantiate the adapter as a service here (or more accurately, instantiate a service
-    # per storage need).
-    # 
-    # Pimcore 11 uses flysystem-bundle v3, so once we've updated to that we can simplify this.
-    #
     document_static_adapter:
         # See TorqAzureBlobStorageAdapter - we needed to modify their source slightly
         class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
