@@ -1,19 +1,21 @@
 {
-    "name": "torqit/pimcore-flysystem-azure-bundle",
+    "name": "torq/pimcore-flysystem-azure-bundle",
     "type": "pimcore-bundle",
     "require": {
-        "league/flysystem": "^3.9",
-        "azure-oss/storage-blob-flysystem": "^1.2.0"
+        "symfony/symfony": "^6.4",
+        "azure-oss/storage-blob-flysystem": "^1.2.0",
+        "pimcore/pimcore": "*",
+        "pimcore/platform-version": "^2024.3"
     },
     "autoload": {
         "psr-4": {
-            "TorqIT\\FlysystemAzureBundle\\": "src"
+            "Torq\\PimcoreFlysystemAzureBundle\\": "src"
         }
     },
     "extra": {
         "pimcore": {
             "bundles": [
-                "TorqIT\\FlysystemAzureBundle\\FlysystemAzureBundle"
+                "TorqPimcoreFlysystemAzureBundle"
             ]
         }
     }
