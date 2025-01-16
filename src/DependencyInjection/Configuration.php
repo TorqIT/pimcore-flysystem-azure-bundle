@@ -1,6 +1,6 @@
 <?php
 
-namespace TorqIT\FlysystemAzureBundle\DependencyInjection;
+namespace Torq\PimcoreFlysystemAzureBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -17,6 +17,6 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        return new TreeBuilder('torq_it_flysystem_azure');
+        return new TreeBuilder('torq_flysystem_azure');
     }
 }

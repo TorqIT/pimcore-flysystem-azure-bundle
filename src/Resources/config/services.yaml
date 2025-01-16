@@ -1,69 +1,65 @@
 services:
-  azure_client_service:
-    class: MicrosoftAzure\Storage\Blob\BlobRestProxy
-    factory: ['MicrosoftAzure\Storage\Blob\BlobRestProxy', 'createBlobService']
+  pimcore_container_client:
+    class: AzureOss\Storage\Blob\BlobContainerClient
+    factory: ['Torq\PimcoreFlysystemAzureBundle\BlobClientFactory', 'createContainerClient']
     arguments:
       $connectionString: 'DefaultEndpointsProtocol=https;AccountName=%env(string:AZURE_STORAGE_ACCOUNT_NAME)%;AccountKey=%env(string:AZURE_STORAGE_ACCOUNT_KEY)%;EndpointSuffix=core.windows.net'
+      $containerName: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+  assets_container_client:
+    class: AzureOss\Storage\Blob\BlobServiceClient
+    factory: ['Torq\PimcoreFlysystemAzureBundle\BlobClientFactory', 'createContainerClient']
+    arguments:
+      $connectionString: 'DefaultEndpointsProtocol=https;AccountName=%env(string:AZURE_STORAGE_ACCOUNT_NAME)%;AccountKey=%env(string:AZURE_STORAGE_ACCOUNT_KEY)%;EndpointSuffix=core.windows.net'
+      $containerName: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER_ASSETS)%'
 
   document_static_adapter:
-    # See TorqAzureBlobStorageAdapter - we needed to modify their source slightly
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+      $containerClient: '@pimcore_container_client'
       $prefix: 'pages'
   assets_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER_ASSETS)%'
+      $containerClient: '@assets_container_client'
       $prefix: 'assets'
   asset_cache_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER_ASSETS)%'
+      $containerClient: '@assets_container_client'
       $prefix: 'asset-cache'
   thumbnail_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER_ASSETS)%'
+      $containerClient: '@assets_container_client'
       $prefix: 'thumbnails'
   version_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+      $containerClient: '@pimcore_container_client'
       $prefix: 'versions'
   recycle_bin_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+      $containerClient: '@pimcore_container_client'
       $prefix: 'recyclebin'
   admin_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+      $containerClient: '@pimcore_container_client'
       $prefix: 'admin'
   email_log_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+      $containerClient: '@pimcore_container_client'
       $prefix: 'email'
   tmp_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+      $containerClient: '@pimcore_container_client'
       $prefix: 'tmp'
   application_log_adapter:
-    class: 'TorqIT\FlysystemAzureBundle\TorqAzureBlobStorageAdapter'
+    class: 'Torq\PimcoreFlysystemAzureBundle\AzureBlobStorageAdapter'
     arguments:
-      $client: '@azure_client_service'
-      $container: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
+      $containerClient: '@pimcore_container_client'
       $prefix: 'application-log'
 
