@@ -13,7 +13,7 @@
     "extra": {
         "pimcore": {
             "bundles": [
-                "TorqPimcoreFlysystemAzureBundle"
+                "Torq\\PimcoreFlysystemAzureBundle\\TorqPimcoreFlysystemAzureBundle"
             ]
         }
     }
