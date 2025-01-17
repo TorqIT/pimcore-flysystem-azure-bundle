@@ -2,10 +2,7 @@
     "name": "torq/pimcore-flysystem-azure-bundle",
     "type": "pimcore-bundle",
     "require": {
-        "symfony/symfony": "^6.4",
         "azure-oss/storage-blob-flysystem": "^1.2.0",
-        "pimcore/pimcore": "*",
-        "pimcore/platform-version": "^2024.3"
     },
     "autoload": {
         "psr-4": {
