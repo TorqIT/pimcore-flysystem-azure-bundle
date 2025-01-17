@@ -22,7 +22,7 @@ class AzureBlobStorageAdapter implements FilesystemAdapter, ChecksumProvider, Te
         ?MimeTypeDetector $mimeTypeDetector = null,
         private readonly string $visibilityHandling = \AzureOss\FlysystemAzureBlobStorage\AzureBlobStorageAdapter::ON_VISIBILITY_THROW_ERROR,
     ) {
-        $this->wrappedAdapter = new \AzureOss\FlysystemAzureBlobStorage\AzureBlobStorageAdapter($this->containerClient, $prefix, $mimeTypeDetector, $this->visibilityHandling);
+        $this->wrappedAdapter = new \AzureOss\FlysystemAzureBlobStorage\AzureBlobStorageAdapter($containerClient, $prefix, $mimeTypeDetector, $visibilityHandling);
     }
 
     /**
@@ -68,7 +68,7 @@ class AzureBlobStorageAdapter implements FilesystemAdapter, ChecksumProvider, Te
 
     public function readStream(string $path)
     {
-        $this->wrappedAdapter->readStream($path);
+        return $this->wrappedAdapter->readStream($path);
     }
 
     public function delete(string $path): void
