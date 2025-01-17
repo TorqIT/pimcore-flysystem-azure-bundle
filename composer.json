@@ -3,6 +3,8 @@
     "type": "pimcore-bundle",
     "require": {
         "azure-oss/storage-blob-flysystem": "^1.2.0",
+        "pimcore/pimcore": "^11.0",
+        "symfony/symfony": "^6.4"
     },
     "autoload": {
         "psr-4": {
