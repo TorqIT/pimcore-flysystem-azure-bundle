@@ -1,13 +1,13 @@
 services:
   pimcore_container_client:
     class: AzureOss\Storage\Blob\BlobContainerClient
-    factory: ['Torq\PimcoreFlysystemAzureBundle\BlobClientFactory', 'createContainerClient']
+    factory: ['Torq\PimcoreFlysystemAzureBundle\BlobContainerClientFactory', 'createContainerClient']
     arguments:
       $connectionString: 'DefaultEndpointsProtocol=https;AccountName=%env(string:AZURE_STORAGE_ACCOUNT_NAME)%;AccountKey=%env(string:AZURE_STORAGE_ACCOUNT_KEY)%;EndpointSuffix=core.windows.net'
       $containerName: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER)%'
   assets_container_client:
     class: AzureOss\Storage\Blob\BlobServiceClient
-    factory: ['Torq\PimcoreFlysystemAzureBundle\BlobClientFactory', 'createContainerClient']
+    factory: ['Torq\PimcoreFlysystemAzureBundle\BlobContainerClientFactory', 'createContainerClient']
     arguments:
       $connectionString: 'DefaultEndpointsProtocol=https;AccountName=%env(string:AZURE_STORAGE_ACCOUNT_NAME)%;AccountKey=%env(string:AZURE_STORAGE_ACCOUNT_KEY)%;EndpointSuffix=core.windows.net'
       $containerName: '%env(string:AZURE_STORAGE_ACCOUNT_CONTAINER_ASSETS)%'
