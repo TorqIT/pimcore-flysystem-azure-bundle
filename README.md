@@ -7,7 +7,7 @@ This package enables Pimcore to write to an Azure Storage Account via Flysystem.
     class Kernel extends PimcoreKernel
     {
         public function registerBundlesToCollection(BundleCollection $collection) {
-            $collection->addBundle(new \Torq\FlysystemAzureBundle\TorqPimcoreFlysystemAzureBundle);
+            $collection->addBundle(new \Torq\PimcoreFlysystemAzureBundle\TorqPimcoreFlysystemAzureBundle);
         }
     }
 4. Add the contents of the file `flysystem_example.yaml` to your project's `flysystem.yaml` file (typically located at `pimcore-root/config/packages/flysystem.yaml`).
