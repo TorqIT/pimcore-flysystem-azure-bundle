@@ -8,6 +8,7 @@ use League\Flysystem\Config;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\FilesystemAdapter;
 use League\Flysystem\FilesystemException;
+use League\Flysystem\UnableToMoveFile;
 use League\Flysystem\UrlGeneration\PublicUrlGenerator;
 use League\Flysystem\UrlGeneration\TemporaryUrlGenerator;
 use League\MimeTypeDetection\MimeTypeDetector;
@@ -116,9 +117,36 @@ class AzureBlobStorageAdapter implements FilesystemAdapter, ChecksumProvider, Te
         return $this->wrappedAdapter->listContents($path, $deep);
     }
 
+    /**
+     * The wrapped adapter's move() copies via Azure's server-side "Copy Blob" API
+     * (copyFromUri) and then immediately deletes the source. That copy is
+     * asynchronous - Azure can accept the copy request and return success before
+     * the destination blob has actually finished being written. Deleting the
+     * source right after initiating the copy can therefore delete the original
+     * before the destination copy has completed, permanently corrupting or
+     * losing the asset (seen as truncated/undecodable images after moving an
+     * asset in Pimcore).
+     * This override moves the blob by synchronously streaming the full source
+     * content to the destination (like writeStream() above) and only deletes
+     * the source once that write has completed.
+     * @throws FilesystemException
+     */
     public function move(string $source, string $destination, Config $config): void
     {
-        $this->wrappedAdapter->move($source, $destination, $config);
+        if ($source === $destination) {
+            return;
+        }
+
+        try {
+            $stream = $this->readStream($source);
+            $this->writeStream($destination, $stream, $config);
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+            $this->delete($source);
+        } catch (\Throwable $e) {
+            throw UnableToMoveFile::fromLocationTo($source, $destination, $e);
+        }
     }
 
     public function copy(string $source, string $destination, Config $config): void
