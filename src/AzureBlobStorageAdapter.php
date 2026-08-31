@@ -118,17 +118,9 @@ class AzureBlobStorageAdapter implements FilesystemAdapter, ChecksumProvider, Te
     }
 
     /**
-     * The wrapped adapter's move() copies via Azure's server-side "Copy Blob" API
-     * (copyFromUri) and then immediately deletes the source. That copy is
-     * asynchronous - Azure can accept the copy request and return success before
-     * the destination blob has actually finished being written. Deleting the
-     * source right after initiating the copy can therefore delete the original
-     * before the destination copy has completed, permanently corrupting or
-     * losing the asset (seen as truncated/undecodable images after moving an
-     * asset in Pimcore).
-     * This override moves the blob by synchronously streaming the full source
-     * content to the destination (like writeStream() above) and only deletes
-     * the source once that write has completed.
+     * The original adapter's move method is asynchronous, which means that it may return successfully
+     * before the file has been fully moved. This overrides the method to be synchronous so that
+     * the file is fully moved before exiting.
      * @throws FilesystemException
      */
     public function move(string $source, string $destination, Config $config): void
