@@ -8,6 +8,7 @@ use League\Flysystem\Config;
 use League\Flysystem\FileAttributes;
 use League\Flysystem\FilesystemAdapter;
 use League\Flysystem\FilesystemException;
+use League\Flysystem\UnableToMoveFile;
 use League\Flysystem\UrlGeneration\PublicUrlGenerator;
 use League\Flysystem\UrlGeneration\TemporaryUrlGenerator;
 use League\MimeTypeDetection\MimeTypeDetector;
@@ -116,9 +117,28 @@ class AzureBlobStorageAdapter implements FilesystemAdapter, ChecksumProvider, Te
         return $this->wrappedAdapter->listContents($path, $deep);
     }
 
+    /**
+     * The original adapter's move method is asynchronous, which means that it may return successfully
+     * before the file has been fully moved. This overrides the method to be synchronous so that
+     * the file is fully moved before exiting.
+     * @throws FilesystemException
+     */
     public function move(string $source, string $destination, Config $config): void
     {
-        $this->wrappedAdapter->move($source, $destination, $config);
+        if ($source === $destination) {
+            return;
+        }
+
+        try {
+            $stream = $this->readStream($source);
+            $this->writeStream($destination, $stream, $config);
+            if (is_resource($stream)) {
+                fclose($stream);
+            }
+            $this->delete($source);
+        } catch (\Throwable $e) {
+            throw UnableToMoveFile::fromLocationTo($source, $destination, $e);
+        }
     }
 
     public function copy(string $source, string $destination, Config $config): void
